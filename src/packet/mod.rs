@@ -1,27 +1,50 @@
 use crate::r#async::FromRaw;
 
+use self::op_poll::OpPoll;
+use self::op_poll:: OpPollReply;
+use self::op_timecode::OpTimeCode;
+
+use std::fmt::Debug;
+
 pub(crate) mod header;
 pub(crate) mod op_poll;
+pub(crate) mod op_timecode;
+
+pub union Payload {
+    unset: (),
+    poll: OpPoll,
+    poll_reply: OpPollReply,
+    time_code: OpTimeCode
+}
+
+impl Debug for Payload {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        todo!()
+    }
+}
 
 #[derive(Debug)]
 pub struct Packet {
 	header: header::Header,
+    payload: Payload
 }
 
 impl FromRaw<Packet> for Packet {
 	fn from_raw(raw: &[u8]) -> Option<Packet> {
 		use header::Opcode;
 
-		let hdr = header::Header::from_raw(raw)?;
-		let payload = match hdr.opcode {
-			Opcode::OpPoll => op_poll::OpPoll::from_raw(raw),
-			Opcode::OpPollReply => None,
-
-			_ => None,
+		let header = header::Header::from_raw(raw)?;
+        let mut payload = Payload{unset: ()};
+		match header.opcode {
+			Opcode::OpPoll => payload.poll = op_poll::OpPoll::from_raw(raw).unwrap(),
+			Opcode::OpPollReply => payload.poll_reply = op_poll::OpPollReply{},
+            Opcode::OpTimeCode => payload.time_code = op_timecode::OpTimeCode::from_raw(raw).unwrap(),
+            Opcode::Unknown => (),
 		};
 
 		Some(Packet{
-			header: hdr,
+			header: header,
+            payload: payload
 		})
 	}
 }

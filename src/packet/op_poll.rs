@@ -25,6 +25,15 @@ bitfield! {
 	deprecated, _: 0;
 }
 
+impl Copy for TalkToMe { }
+
+impl Clone for TalkToMe {
+    fn clone(&self) -> TalkToMe {
+        *self
+    }
+}
+
+#[derive(Clone, Copy)]
 pub struct OpPoll {
 	talk_to_me: TalkToMe,
 	priority: u8,
@@ -40,6 +49,7 @@ impl FromRaw<OpPoll> for OpPoll {
 	}
 }
 
+#[derive(Copy, Clone)]
 pub struct OpPollReply {}
 
 #[cfg(test)]

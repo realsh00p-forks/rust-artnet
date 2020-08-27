@@ -9,6 +9,7 @@ const OPCODE_LOCATION: usize = 8;
 pub(super) enum Opcode {
 	OpPoll = 0x2000,
 	OpPollReply = 0x2100,
+    OpTimeCode = 0x9700,
 
 	Unknown = 0xFFFF,
 }
