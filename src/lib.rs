@@ -2,10 +2,12 @@ mod r#async;
 mod packet;
 
 use packet::Packet;
+
 pub type PacketReceiver = r#async::AsyncPacketReceiver<Packet>;
 
 pub mod prelude {
 	pub use super::packet::Packet;
+    pub use super::packet::header::Opcode;
 	pub use super::PacketReceiver;
 	pub use super::{Controller, Node, Responder};
 }
