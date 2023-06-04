@@ -16,17 +16,22 @@ pub union Payload {
     poll_reply: OpPollReply,
     time_code: OpTimeCode
 }
-
-impl Debug for Payload {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        todo!()
-    }
-}
-
-#[derive(Debug)]
 pub struct Packet {
 	pub header: header::Header,
     pub payload: Payload
+}
+
+impl Debug for Packet {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        unsafe {
+            match self.header.opcode {
+                header::Opcode::OpPoll => write!(f, "Poll {:?}", self.payload.poll),
+                header::Opcode::OpPollReply => write!(f, "PollReply {:?}", self.payload.poll_reply),
+                header::Opcode::OpTimeCode => write!(f, "TimeCode {:?}", self.payload.time_code),
+                header::Opcode::Unknown => todo!(),
+            }
+        }
+    }
 }
 
 impl FromRaw<Packet> for Packet {

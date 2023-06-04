@@ -12,7 +12,7 @@ fn validate_version(data: &[u8]) -> Option<()> {
 	}
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct OpTimeCode {
     frames: u8,
     seconds: u8,

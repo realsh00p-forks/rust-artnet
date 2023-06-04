@@ -33,7 +33,7 @@ impl Clone for TalkToMe {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct OpPoll {
 	talk_to_me: TalkToMe,
 	priority: u8,
@@ -49,7 +49,7 @@ impl FromRaw<OpPoll> for OpPoll {
 	}
 }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct OpPollReply {}
 
 #[cfg(test)]

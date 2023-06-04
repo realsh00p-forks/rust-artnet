@@ -48,10 +48,7 @@ where
 			.socket
 			.recv_from(&mut self.cache)
 			.map_err(|_| AsyncError::ReadError)?;
-		println!("{}: {:#?}", bytes_read, addr);
-
 		let slice = &self.cache[..bytes_read];
-		println!("{:?}", slice);
 		T::from_raw(slice).map_or(Err(AsyncError::GeneralError), Ok)
 	}
 }
