@@ -14,11 +14,11 @@ fn validate_version(data: &[u8]) -> Option<()> {
 
 #[derive(Clone, Copy, Debug)]
 pub struct OpTimeCode {
-    frames: u8,
-    seconds: u8,
-    minutes: u8,
-    hours: u8,
-    typee: u8,
+    pub frames: u8,
+    pub seconds: u8,
+    pub minutes: u8,
+    pub hours: u8,
+    pub typee: u8,
 }
 
 impl FromRaw<OpTimeCode> for OpTimeCode {
