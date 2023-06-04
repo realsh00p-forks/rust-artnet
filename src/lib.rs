@@ -7,6 +7,9 @@ pub type PacketReceiver = r#async::AsyncPacketReceiver<Packet>;
 
 pub mod prelude {
 	pub use super::packet::Packet;
+    pub use super::packet::op_poll::OpPoll;
+    pub use super::packet::op_poll::OpPollReply;
+    pub use super::packet::op_timecode::OpTimeCode;
     pub use super::packet::header::Opcode;
 	pub use super::PacketReceiver;
 	pub use super::{Controller, Node, Responder};
