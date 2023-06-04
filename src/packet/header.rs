@@ -20,6 +20,7 @@ impl From<u16> for Opcode {
 		match i {
 			0x2000 => OpPoll,
 			0x2100 => OpPollReply,
+            0x9700 => OpTimeCode,
 			_ => {
 				println!("{:x?}", i);
 				Unknown
@@ -44,7 +45,13 @@ impl FromRaw<Header> for Header {
 }
 
 fn validate_signature(data: &[u8]) -> Option<()> {
+
 	let signature_expected_length = ARTNET_SIGNATURE.len() + 1;
+
+    if data.len() < signature_expected_length {
+        return None;
+    }
+
 	let signature = &data[..signature_expected_length];
 	let is_valid = signature
 		.iter()
