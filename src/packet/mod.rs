@@ -25,8 +25,8 @@ impl Debug for Payload {
 
 #[derive(Debug)]
 pub struct Packet {
-	header: header::Header,
-    payload: Payload
+	pub header: header::Header,
+    pub payload: Payload
 }
 
 impl FromRaw<Packet> for Packet {
