@@ -12,9 +12,9 @@ pub(crate) mod op_timecode;
 
 pub union Payload {
     unset: (),
-    poll: OpPoll,
-    poll_reply: OpPollReply,
-    time_code: OpTimeCode
+    pub poll: OpPoll,
+    pub poll_reply: OpPollReply,
+    pub time_code: OpTimeCode
 }
 pub struct Packet {
 	pub header: header::Header,
